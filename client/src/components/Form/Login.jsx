@@ -17,7 +17,7 @@ export function Login() {
     const [user, dispatch] = useReducer(reducer, initialState);
     const [response, setResponse] = useState("")
     const [loading, setLoading] = useState(false)
-    const [type, setType] = useState("password")
+    // const [type, setType] = useState("password")
     // const [passwordType, setPasswordType] = useState("password")
 
     const inputChangeHandler = e => {
@@ -40,7 +40,7 @@ export function Login() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'http://localhost:3000/api/v1/users/login',
+                url: 'http://localhost:3000/api/v1/user/login',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -49,9 +49,15 @@ export function Login() {
             // navigate('')
             console.log(res)
             if (res.data.result === 'success') {
+                let token = "Bearer " + res.data.token;
+                let date = new Date(); // Now
+                date.setDate(date.getDate() + 90);
+
+                localStorage.setItem('jwt', token)
+
                 setResponse(res.data.message)
                 setTimeout(() => {
-                    navigate('/')
+                    navigate('/user')
                 }, 2000)
             }
         } catch (error) {
@@ -65,11 +71,10 @@ export function Login() {
             id: 1,
             label: "Email",
             name: "email",
-            type: "text",
+            type: "email",
             placeholder: "Email",
             errMessage: "Enter valid email address",
-            // pattern: "",
-            // required: true
+            required: true
         },
         {
             id: 2,
@@ -78,8 +83,7 @@ export function Login() {
             type: "password",
             placeholder: "Password",
             errMessage: "Password should be 8-20 characters and include atleast 1 letter, 1 number, and 1 special character!",
-            // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,20}`,
-            // required: true
+            required: true
         },
     ]
 
@@ -88,7 +92,7 @@ export function Login() {
             {loading && <Loader />}
             <div onSubmit={submitLogInForm} className='flex justify-center items-center bg-slate-300 h-full w-full p-20'>
                 <form className='px-20 py-24 bg-white rounded-lg'>
-                    {response && <h1 className='text-center bg-purple-700 text-white p-3 my-4 font-semibold rounded-lg'>{response}</h1>}
+                    {response && <h1 className='text-center bg-purple-700 text-white p-3 mb-10 font-semibold rounded-lg'>{response}</h1>}
                     <div className='flex justify-center'>
                         <FormButton to={"/login"} Icon={MdPerson} text={"Sign In"} classes={"bg-white py-2 px-6 text-purple-700"} />
 

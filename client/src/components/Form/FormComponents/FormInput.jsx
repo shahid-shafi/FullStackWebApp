@@ -1,17 +1,18 @@
 import React from 'react'
 import "./Form.css"
 function FormInput(props) {
-    const { inputChangeHandler, classes, label, name, Icon, errMessage, ...inputProps } = props;
-   
+    const { inputChangeHandler, classes, label, name, Icon, errMessage, value, ...inputProps } = props;
+
     return (
         <div className='my-2'>
             <div className='flex flex-col space-y-1'>
                 {label && <label className="font-bold text-slate-600">{inputProps.placeholder}</label>}
                 <input
                     className={`leading-none outline-0 h-10 px-2 rounded-md w-80 shadow shadow-slate-400 hover:scale-105 ${classes}`}
-                    onChange={(e) => inputChangeHandler(e)}
+                    onChange={inputChangeHandler}
                     id={name}
                     name={name}
+                    value={value}
                     {...inputProps}
                 />
             </div>
@@ -19,7 +20,7 @@ function FormInput(props) {
         </div>
     )
 }
-export default FormInput
+export default FormInput;
 
 
 

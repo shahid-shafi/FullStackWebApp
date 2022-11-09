@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 import crypto from 'crypto'
 import sendEmail from "../utils/email.js";
+import { promisify } from 'util'
 
 const sighToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -13,7 +14,6 @@ const sighToken = id => {
 
 const createSendToken = (user, statusCode, res, message) => {
     const token = sighToken(user._id);
-    console.log(token);
 
     const cookieOptions = {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
@@ -22,14 +22,13 @@ const createSendToken = (user, statusCode, res, message) => {
 
     cookieOptions.secure = true;
     res.cookie('jwt', token, cookieOptions);
+    user.password = undefined;
 
     res.status(statusCode).json({
         result: 'success',
         token,
         message,
-        data: {
-            user
-        }
+        user
     });
 }
 
@@ -80,6 +79,30 @@ export const login = catchAsync(async (req, res, next) => {
     createSendToken(user, 200, res, message)
 })
 
+export const isLoggedIn = catchAsync(async (req, res, next) => {
+    //1. Getting Token and checking in databases
+    let token = req.params.jwtToken.split(' ')[1];
+    console.log(token)
+    if (!token) {
+        return next(new AppError('You are not logged in!. Please login to get access', 401))
+    }
+    //2. Validate token  
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
+    // const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    console.log(decoded)
+    //3. Check if user exists
+    const user = await User.findById(decoded.id);
+    if (!user) {
+        return next(new AppError('User beloging to this token does not exist', 401))
+    }
+
+    //Access Granted 
+    res.status(200).json({
+        result: 'success',
+        isAuthanticated: true,
+        user
+    })
+})
 
 export const forgotPassword = catchAsync(async (req, res, next) => {
     //1. Get the user based on Posted email.
@@ -127,7 +150,6 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
         }
     }
 })
-
 
 export const resetPassword = catchAsync(async (req, res, next) => {
     // const currentPassword = req.body.currentPassword;

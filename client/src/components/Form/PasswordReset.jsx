@@ -32,7 +32,7 @@ function PasswordReset() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: `/api/v1/users/resetPassword/:${token}`,
+                url: `/api/v1/user/resetPassword/:${token}`,
                 headers: {
                     "Content-Type": "application/json"
                 },

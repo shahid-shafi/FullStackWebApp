@@ -36,7 +36,6 @@ function Signup() {
       type: "text",
       placeholder: "Username",
       errMessage: "UserName should be 3-16 characters and shouldn't include special character!",
-      pattern: "^[A-Za-z0-9]{3,16}$",
       required: true
     },
     {
@@ -71,10 +70,6 @@ function Signup() {
     },
   ]
 
-  useEffect(() => {
-    console.log(user)
-  }, [user])
-
   const submitSignupForm = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -82,7 +77,7 @@ function Signup() {
     try {
       const res = await axios({
         method: 'POST',
-        url: '/api/v1/users/signup',
+        url: '/api/v1/user/signup',
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -101,10 +96,6 @@ function Signup() {
           navigate('/login')
         }, 3000)
       }
-
-      // setTimeout(() => {
-      //   navigate('/')
-      // }, 3000)
 
     } catch (error) {
       alert(error)
