@@ -12,6 +12,12 @@ const userSchema = new Schema({
     username: {
         type: String,
     },
+    profession: {
+        type: String,
+    },
+    phone: {
+        type: Number,
+    },
     email: {
         type: String,
         required: [true, 'Please provide your email address'],

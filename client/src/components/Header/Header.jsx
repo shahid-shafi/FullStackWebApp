@@ -28,6 +28,7 @@ function Header() {
                                     <NavLink to="/login">Login</NavLink>
                                     <NavLink to="/signup">Signup</NavLink>
                                 </>}
+                                
                                 {isLoggedIn && <>
                                     <NavLink to="/user">User</NavLink>
                                     <NavLink to="/forgotPassword">ForgotPassword</NavLink>

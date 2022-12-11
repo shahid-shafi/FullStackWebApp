@@ -19,6 +19,9 @@ export const getOne = (Model) => {
 
 export function updateOne(Model) {
     return catchAsync(async (req, res, next) => {
+
+        const { email, username } = req.body
+        console.log(email, username)
         const user = await Model.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true

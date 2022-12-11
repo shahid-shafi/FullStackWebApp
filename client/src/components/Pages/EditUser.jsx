@@ -75,6 +75,7 @@ const EditUser = () => {
                     {response && <h1 className='text-center bg-purple-700 text-white p-3 my-4 font-semibold rounded-lg'>{response}</h1>}
                     <Link to="/user" className='absolute left-6 top-6 text-2xl text-purple-700'><BiArrowBack /></Link>
                     <h1 className='text-center font-bold text-purple-700 rounded-full bg-slate-200 py-2'>Edit User</h1>
+                    
                     <FormInput inputChangeHandler={inputChangeHandler}
                         label="Name"
                         value={user.name}

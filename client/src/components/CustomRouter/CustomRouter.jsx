@@ -9,7 +9,6 @@ import CurrentUser from '../Pages/CurrentUser'
 import EditUser from '../Pages/EditUser'
 import AuthContext from '../../store/auth-context'
 
-
 const CustomRouter = () => {
     const { isLoggedIn } = useContext(AuthContext)
     console.log(isLoggedIn)
@@ -19,7 +18,7 @@ const CustomRouter = () => {
             <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
 
-            {isLoggedIn === true && <>
+            {isLoggedIn && <>
                 <Route exact path='/user' element={<CurrentUser />} />
                 <Route exact path='/edit-user' element={<EditUser />} />
                 <Route path='/forgotPassword' element={<ForgotPassword />} />

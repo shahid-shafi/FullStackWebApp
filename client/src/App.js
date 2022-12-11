@@ -1,12 +1,11 @@
-import { HashRouter as Router, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './App.scss';
+import AuthContext from './store/auth-context';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import CustomRouter from './components/CustomRouter/CustomRouter';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
-import AuthContext from './store/auth-context';
-import { Login } from './components/Form/Login';
 
 function App() {
   const navigate = useNavigate();
