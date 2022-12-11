@@ -2,3 +2,5 @@ Hi how are you
 Hello dear friend
 
 Just for test purpose
+Fixed the bug on this file
+
