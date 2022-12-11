@@ -1,2 +1,4 @@
 Hi how are you 
 Hello dear friend
+
+Fixed the bug on this file
