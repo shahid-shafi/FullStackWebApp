@@ -2,7 +2,7 @@ Hi how are you
 Hello dear friend
 
 Just for test purpose
-Fixed the bug on this file
+* Fixed the bug on this file
 
 Fixed the bug on this file
-Bug Fixed
+#Bug Fixed
